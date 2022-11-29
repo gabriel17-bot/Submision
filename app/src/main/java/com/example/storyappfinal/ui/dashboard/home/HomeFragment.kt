@@ -13,7 +13,7 @@ import java.util.*
 import kotlin.concurrent.schedule
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private val rvAdapter = StoryAdapter()
     private lateinit var binding: FragmentHomeBinding
@@ -36,7 +36,10 @@ class HomeFragment : Fragment() {
                 lifecycle,
                 it
             )
-//            Helper.updateWidgetData(requireContext())
+        }
+
+        binding.swipeRefresh.setOnRefreshListener {
+            onRefresh()
         }
 
         binding.rvStory.apply {
@@ -49,5 +52,13 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onRefresh() {
+        binding.swipeRefresh.isRefreshing = true
+        rvAdapter.refresh()
+        Timer().schedule(2000) {
+            binding.swipeRefresh.isRefreshing = false
+            binding.rvStory.smoothScrollToPosition(0)
+        }
+    }
 
 }

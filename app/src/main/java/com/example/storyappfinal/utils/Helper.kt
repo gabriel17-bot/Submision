@@ -94,16 +94,9 @@ object Helper {
         Locale.getDefault()
     ).format(System.currentTimeMillis())
 
-    /* string simpleDate (unformatted) to date */
-    private fun parseSimpleDate(dateValue: String): Date {
-        return defaultDate.parse(dateValue) as Date
-    }
 
     /* simpleDate (Date) to string */
     private fun getSimpleDate(date: Date): String = simpleDate.format(date)
-
-    /* string to string */
-    fun getSimpleDateString(dateValue: String): String = getSimpleDate(parseSimpleDate(dateValue))
 
     /* string UTC format to date */
     private fun parseUTCDate(timestamp: String): Date {
@@ -116,23 +109,6 @@ object Helper {
         }
     }
 
-    /* get expected upload time, ie : uploaded 2 mins ago */
-    fun getTimelineUpload(context: Context, timestamp: String): String {
-        val currentTime = getCurrentDate()
-        val uploadTime = parseUTCDate(timestamp)
-        val diff: Long = currentTime.time - uploadTime.time
-        val seconds = diff / 1000
-        val minutes = seconds / 60
-        val hours = minutes / 60
-        val days = hours / 24
-        val label = when (minutes.toInt()) {
-            0 -> "$seconds ${context.getString(R.string.const_text_seconds_ago)}"
-            in 1..59 -> "$minutes ${context.getString(R.string.const_text_minutes_ago)}"
-            in 60..1440 -> "$hours ${context.getString(R.string.const_text_hours_ago)}"
-            else -> "$days ${context.getString(R.string.const_text_days_ago)}"
-        }
-        return label
-    }
 
     /* get readable date of uploaded story, ie : 30 April 2022 00.00 */
     fun getUploadStoryTime(timestamp: String): String {
@@ -186,34 +162,6 @@ object Helper {
         dialog.show()
     }
 
-    /* show preview image in folder fragments */
-    fun showDialogPreviewImage(
-        context: Context,
-        image: Bitmap,
-        path: String
-    ) {
-        val dialog = Dialog(context)
-        dialog.setCancelable(true)
-        dialog.window!!.apply {
-            val params: WindowManager.LayoutParams = this.attributes
-            params.width = WindowManager.LayoutParams.WRAP_CONTENT
-            params.height = WindowManager.LayoutParams.WRAP_CONTENT
-            attributes.windowAnimations = android.R.transition.slide_bottom
-            setGravity(Gravity.CENTER)
-            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        }
-//        dialog.setContentView(R.layout.custom_dialog_preview_image)
-//        val tvPath = dialog.findViewById<TextView>(R.id.image_path)
-//        tvPath.text = path
-//        val imageContainer = dialog.findViewById<ImageView>(R.id.image_preview)
-//        imageContainer.setImageBitmap(image)
-//        val btnClose = dialog.findViewById<ImageView>(R.id.btn_close_preview)
-//        btnClose.setOnClickListener {
-//            dialog.dismiss()
-//        }
-//        dialog.show()
-    }
-
     /* -------------------------
     * FILE HELPER & BITMAP
     * ------------------------- */
@@ -259,49 +207,6 @@ object Helper {
             mediaDir != null && mediaDir.exists()
         ) mediaDir else application.filesDir
         return File(outputDirectory, filename)
-    }
-
-    /* load bitmap from exact path location */
-    fun loadImageFromStorage(path: String): Bitmap? {
-        val imgFile = File(path)
-        return if (imgFile.exists()) {
-            BitmapFactory.decodeFile(imgFile.absolutePath)
-        } else null
-    }
-
-    /* load BITMAP from string URL */
-    fun bitmapFromURL(context: Context, urlString: String): Bitmap {
-        return try {
-            /* allow access content from URL internet */
-            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-            StrictMode.setThreadPolicy(policy)
-
-            /* fetch image data from URL */
-            val url = URL(urlString)
-            val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-            connection.doInput = true
-            connection.connect()
-            val input: InputStream = connection.inputStream
-            BitmapFactory.decodeStream(input)
-        } catch (e: IOException) {
-            BitmapFactory.decodeResource(context.resources, R.drawable.bot)
-        }
-    }
-
-    fun resizeBitmap(bm: Bitmap, newWidth: Int, newHeight: Int): Bitmap {
-        val width = bm.width
-        val height = bm.height
-        val scaleWidth = newWidth.toFloat() / width
-        val scaleHeight = newHeight.toFloat() / height
-
-        /* init matrix to resize bitmap */
-        val matrix = Matrix()
-        matrix.postScale(scaleWidth, scaleHeight)
-
-        /* recreate new bitmap as new defined size */
-        val resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false)
-        bm.recycle()
-        return resizedBitmap
     }
 
     fun rotateBitmap(bitmap: Bitmap, isBackCamera: Boolean = false): Bitmap {

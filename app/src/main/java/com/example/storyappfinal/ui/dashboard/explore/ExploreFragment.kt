@@ -35,8 +35,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import java.lang.StringBuilder
 
-class ExploreFragment : Fragment(), OnMapReadyCallback,
-    AdapterView.OnItemSelectedListener {
+class ExploreFragment : Fragment(), OnMapReadyCallback{
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mMap: GoogleMap
     private lateinit var binding: FragmentExploreBinding
@@ -49,21 +48,21 @@ class ExploreFragment : Fragment(), OnMapReadyCallback,
         binding = FragmentExploreBinding.inflate(inflater, container, false)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
-        /* multilingual text for spinner */
-        val zoomLevel = arrayOf(
-            getString(R.string.const_text_adapter_maps_default),
-            getString(R.string.const_text_adapter_maps_province),
-            getString(R.string.const_text_adapter_maps_city),
-            getString(R.string.const_text_adapter_maps_district),
-            getString(R.string.const_text_adapter_maps_around)
-        )
-
-        /* set up dropdown location scope */
-        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-            requireContext(),
-            android.R.layout.simple_spinner_item, zoomLevel
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        /* multilingual text for spinner */
+//        val zoomLevel = arrayOf(
+//            getString(R.string.const_text_adapter_maps_default),
+//            getString(R.string.const_text_adapter_maps_province),
+//            getString(R.string.const_text_adapter_maps_city),
+//            getString(R.string.const_text_adapter_maps_district),
+//            getString(R.string.const_text_adapter_maps_around)
+//        )
+//
+//        /* set up dropdown location scope */
+//        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+//            requireContext(),
+//            android.R.layout.simple_spinner_item, zoomLevel
+//        )
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         val mapFragment =
             (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment)
@@ -100,37 +99,37 @@ class ExploreFragment : Fragment(), OnMapReadyCallback,
             requireContext(),
             (activity as MainActivity).getUserToken()
         )
-        storyViewModel.coordinateTemp.observe(this) {
-            CameraUpdateFactory.newLatLngZoom(it, 4f)
-        }
+//        storyViewModel.coordinateTemp.observe(this) {
+//            CameraUpdateFactory.newLatLngZoom(it, 4f)
+//        }
     }
 
-    private fun routeToDetailStory(data: Story) {
-        val intent = Intent(requireContext(), DetailActivity::class.java)
-        intent.putExtra(Constanta.StoryDetail.UserName.name, data.name)
-        intent.putExtra(Constanta.StoryDetail.ImageURL.name, data.photoUrl)
-        intent.putExtra(
-            Constanta.StoryDetail.ContentDescription.name,
-            data.description
-        )
-        intent.putExtra(
-            Constanta.StoryDetail.UploadTime.name,
-            /*
-            dynamic set uploaded time locally
-                en : uploaded + on + 30 April 2022 00.00
-                id : diupload + pada + 30 April 2022 00.00
-            */
-            "${requireContext().getString(R.string.const_text_uploaded)} ${
-                requireContext().getString(
-                    R.string.const_text_time_on
-                )
-            } ${Helper.getUploadStoryTime(data.createdAt)}"
-        )
-        intent.putExtra(Constanta.StoryDetail.Latitude.name, data.lat.toString())
-        intent.putExtra(Constanta.StoryDetail.Longitude.name, data.lon.toString())
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        requireContext().startActivity(intent)
-    }
+//    private fun routeToDetailStory(data: Story) {
+//        val intent = Intent(requireContext(), DetailActivity::class.java)
+//        intent.putExtra(Constanta.StoryDetail.UserName.name, data.name)
+//        intent.putExtra(Constanta.StoryDetail.ImageURL.name, data.photoUrl)
+//        intent.putExtra(
+//            Constanta.StoryDetail.ContentDescription.name,
+//            data.description
+//        )
+//        intent.putExtra(
+//            Constanta.StoryDetail.UploadTime.name,
+//            /*
+//            dynamic set uploaded time locally
+//                en : uploaded + on + 30 April 2022 00.00
+//                id : diupload + pada + 30 April 2022 00.00
+//            */
+//            "${requireContext().getString(R.string.const_text_uploaded)} ${
+//                requireContext().getString(
+//                    R.string.const_text_time_on
+//                )
+//            } ${Helper.getUploadStoryTime(data.createdAt)}"
+//        )
+//        intent.putExtra(Constanta.StoryDetail.Latitude.name, data.lat.toString())
+//        intent.putExtra(Constanta.StoryDetail.Longitude.name, data.lon.toString())
+//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//        requireContext().startActivity(intent)
+//    }
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -138,57 +137,47 @@ class ExploreFragment : Fragment(), OnMapReadyCallback,
         ) { isGranted: Boolean ->
             if (isGranted) {
                 getMyLocation()
-            } else {
-                Helper.notifyGivePermission(
-                    requireContext(),
-                    getString(R.string.UI_validation_permission_location)
-                )
             }
         }
 
     private fun getMyLocation() {
         if (ContextCompat.checkSelfPermission(
-                (activity as MainActivity),
-                Manifest.permission.ACCESS_FINE_LOCATION
+                requireContext().applicationContext,
+                Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             mMap.isMyLocationEnabled = true
-            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
-                    storyViewModel.coordinateTemp.postValue(
-                        LatLng(
-                            location.latitude,
-                            location.longitude
-                        )
-                    )
-                } else {
-                    storyViewModel.coordinateTemp.postValue(Constanta.indonesiaLocation)
+                    val latLng = LatLng(location.latitude, location.longitude)
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 8f))
                 }
             }
+
         } else {
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
         }
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val level: Float = when (position) {
-            0 -> 4f
-            1 -> 8f
-            2 -> 11f
-            3 -> 14f
-            4 -> 17f
-            else -> 4f
-        }
-        mMap.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(storyViewModel.coordinateTemp.value!!, level)
-        )
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        mMap.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(Constanta.indonesiaLocation, 4f)
-        )
-    }
+//    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//        val level: Float = when (position) {
+//            0 -> 4f
+//            1 -> 8f
+//            2 -> 11f
+//            3 -> 14f
+//            4 -> 17f
+//            else -> 4f
+//        }
+//        mMap.animateCamera(
+//            CameraUpdateFactory.newLatLngZoom(storyViewModel.coordinateTemp.value!!, level)
+//        )
+//    }
+//
+//    override fun onNothingSelected(parent: AdapterView<*>?) {
+//        mMap.animateCamera(
+//            CameraUpdateFactory.newLatLngZoom(Constanta.indonesiaLocation, 4f)
+//        )
+//    }
 
 
 }

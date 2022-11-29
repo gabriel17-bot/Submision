@@ -37,8 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.dashboard.story.NewStoryPickLocation" />
-        <activity android:name=".ui.dashboard.profile.WebViewActivity" />
         <activity android:name=".ui.dashboard.story.NewStoryActivity" />
         <activity android:name=".ui.dashboard.story.CameraActivity" />
         <activity android:name=".ui.dashboard.MainActivity" />

@@ -31,8 +31,6 @@ class EditTextClear : AppCompatEditText, View.OnTouchListener {
     }
 
     private fun init() {
-        clearButtonImage =
-            ContextCompat.getDrawable(context, R.drawable.ic_baseline_clear_24) as Drawable
         setOnTouchListener(this)
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -88,18 +86,10 @@ class EditTextClear : AppCompatEditText, View.OnTouchListener {
             if (isClearButtonClicked) {
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        clearButtonImage = ContextCompat.getDrawable(
-                            context,
-                            R.drawable.ic_baseline_clear_24
-                        ) as Drawable
                         showClearButton()
                         return true
                     }
                     MotionEvent.ACTION_UP -> {
-                        clearButtonImage = ContextCompat.getDrawable(
-                            context,
-                            R.drawable.ic_baseline_clear_24
-                        ) as Drawable
                         when {
                             text != null -> text?.clear()
                         }
@@ -118,7 +108,6 @@ class EditTextClear : AppCompatEditText, View.OnTouchListener {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         context.apply {
-            background = ContextCompat.getDrawable(this, R.drawable.custom_form_input)
             setTextColor(ContextCompat.getColor(this, R.color.dicoding_primary_500))
             setHintTextColor(ContextCompat.getColor(this, R.color.dicoding_secondary_500))
         }

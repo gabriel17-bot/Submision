@@ -18,14 +18,12 @@ class AuthViewModel : ViewModel() {
 
     var loading = MutableLiveData(View.GONE)
     val error = MutableLiveData("")
-    val tempEmail = MutableLiveData("") // hold email to saved with user preferences
-
-    /* for handle API response */
+    val tempEmail = MutableLiveData("")
     val loginResult = MutableLiveData<Login>()
     val registerResult = MutableLiveData<Register>()
 
     fun login(email: String, password: String) {
-        tempEmail.postValue(email) // temporary hold email for save user preferences
+        tempEmail.postValue(email)
         loading.postValue(View.VISIBLE)
         val client = ApiConfig.getApiService().doLogin(email, password)
         client.enqueue(object : Callback<Login> {

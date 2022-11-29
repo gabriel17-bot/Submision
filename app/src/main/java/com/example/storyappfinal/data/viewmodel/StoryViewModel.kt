@@ -27,7 +27,7 @@ class StoryViewModel : ViewModel() {
     val storyList = MutableLiveData<List<Story>>()
     val error = MutableLiveData("")
     val isError = MutableLiveData(true)
-    val isLocationPicked = MutableLiveData(false) // init for location new story not selected
+    val isLocationPicked = MutableLiveData(false)
     val coordinateLatitude = MutableLiveData(0.0)
     val coordinateLongitude = MutableLiveData(0.0)
     val coordinateTemp = MutableLiveData(Constanta.indonesiaLocation)

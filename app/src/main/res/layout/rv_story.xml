@@ -29,7 +29,6 @@
         android:layout_marginStart="15dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/person_name"
-        android:textColor="@color/white"
         android:textSize="18sp"
         android:transitionName="user_name"
         app:layout_constraintStart_toStartOf="parent"

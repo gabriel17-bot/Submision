@@ -53,7 +53,6 @@ class EditTextEmail : AppCompatEditText {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         context.apply {
-            background = ContextCompat.getDrawable(this, R.drawable.custom_form_input)
             setTextColor(ContextCompat.getColor(this, R.color.dicoding_primary_500))
             setHintTextColor(ContextCompat.getColor(this, R.color.dicoding_secondary_500))
         }

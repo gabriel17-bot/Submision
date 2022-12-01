@@ -53,8 +53,7 @@ class EditTextEmail : AppCompatEditText {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         context.apply {
-            setTextColor(ContextCompat.getColor(this, R.color.dicoding_primary_500))
-            setHintTextColor(ContextCompat.getColor(this, R.color.dicoding_secondary_500))
+            setTextColor(ContextCompat.getColor(this, R.color.primary_500))
         }
         isSingleLine = true
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START

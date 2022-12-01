@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 
 class SettingViewModel(private val pref: SettingPreferences): ViewModel() {
 
-    // simplify single invocation of preferences with property params
     fun getUserPreferences(property:String): LiveData<String> {
         return when(property){
             Constanta.UserPreferences.UserUID.name -> pref.getUserUid().asLiveData()

@@ -38,25 +38,6 @@ class ProfileFragment : Fragment() {
         val pref = SettingPreferences.getInstance((activity as MainActivity).dataStore)
         val settingViewModel =
             ViewModelProvider(this, ViewModelSettingFactory(pref))[SettingViewModel::class.java]
-//        settingViewModel.getUserPreferences(Constanta.UserPreferences.UserName.name)
-//            .observe(viewLifecycleOwner) {
-//                binding.textName.text = it
-//            }
-//        settingViewModel.getUserPreferences(Constanta.UserPreferences.UserUID.name)
-//            .observe(viewLifecycleOwner) {
-//                binding.textUid.text = it
-//            }
-//        settingViewModel.getUserPreferences(Constanta.UserPreferences.UserEmail.name)
-//            .observe(viewLifecycleOwner) {
-//                binding.textEmail.text = it
-//            }
-//        settingViewModel.getUserPreferences(Constanta.UserPreferences.UserLastLogin.name)
-//            .observe(viewLifecycleOwner) {
-//                binding.textLastLogin.text =
-//                    StringBuilder(getString(R.string.const_text_login_on))
-//                        .append(" ")
-//                        .append(Helper.getSimpleDateString(it))
-//            }
         settingViewModel.getUserPreferences(Constanta.UserPreferences.UserToken.name)
             .observe(viewLifecycleOwner) {
                 if (it == Constanta.preferenceDefaultValue) {
@@ -66,25 +47,5 @@ class ProfileFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             settingViewModel.clearUserPreferences()
         }
-//        binding.btnInfo.setOnClickListener {
-//            Helper.showDialogInfo(
-//                (activity as MainActivity),
-//                (activity as MainActivity).getString(R.string.UI_info_profile), Gravity.START
-//            )
-//        }
-//        binding.btnSetPermission.setOnClickListener {
-//            Helper.openSettingPermission(requireContext())
-//        }
-//        binding.btnSetLanguage.setOnClickListener {
-//            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
-//        }
-//        binding.btnPandoraBox.setOnClickListener {
-//            (activity as MainActivity).startActivity(
-//                Intent(
-//                    (activity as MainActivity),
-//                    WebViewActivity::class.java
-//                )
-//            )
-//        }
     }
 }

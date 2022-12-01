@@ -20,7 +20,6 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /* activate options menu in fragments */
         setHasOptionsMenu(true)
     }
 

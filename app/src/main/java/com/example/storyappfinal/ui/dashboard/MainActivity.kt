@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -39,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var startNewStory: ActivityResultLauncher<Intent>
 
     @RequiresApi(Build.VERSION_CODES.M)
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -49,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         fragmentHome = HomeFragment()
         val fragmentExplore = ExploreFragment()
 
-        /* load latest story when new story successfully uploaded */
         startNewStory =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
@@ -57,15 +57,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        /* obtain token for reuse in child fragments */
         settingViewModel.getUserPreferences(Constanta.UserPreferences.UserToken.name)
             .observe(this) {
                 token = "Bearer $it"
-                /* start load data after token obtained */
                 switchFragment(fragmentHome!!)
             }
 
-        binding.bottomNavigationView.background = null // hide abnormal layer in bottom nav
+        binding.bottomNavigationView.background = null
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -103,7 +101,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -121,14 +118,6 @@ class MainActivity : AppCompatActivity() {
                     Helper.notifyGivePermission(
                         this,
                         "Berikan aplikasi izin lokasi untuk membaca lokasi  "
-                    )
-                }
-            }
-            Constanta.STORAGE_PERMISSION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                    Helper.notifyGivePermission(
-                        this,
-                        "Berikan aplikasi izin storage untuk membaca dan menyimpan story"
                     )
                 }
             }
@@ -151,7 +140,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
-        const val EXTRA_TOKEN = "extra_token"
     }
 
     private fun routeToStory() {
@@ -162,8 +150,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    /* return current token from dataPreference to child fragment */
     fun getUserToken() = token
 
     fun getStoryViewModel(): StoryPagerViewModel {
@@ -177,7 +163,6 @@ class MainActivity : AppCompatActivity() {
         return viewModel
     }
 
-
     private fun switchFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
@@ -185,12 +170,24 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-
     fun routeToAuth() = startActivity(Intent(this, AuthActivity::class.java))
 
     override fun onBackPressed() {
         super.onBackPressed()
         finishAffinity()
+    }
+
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+        supportActionBar?.hide()
     }
 
 

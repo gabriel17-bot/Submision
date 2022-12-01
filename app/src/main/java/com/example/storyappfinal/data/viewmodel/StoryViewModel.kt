@@ -30,7 +30,6 @@ class StoryViewModel : ViewModel() {
     val isLocationPicked = MutableLiveData(false)
     val coordinateLatitude = MutableLiveData(0.0)
     val coordinateLongitude = MutableLiveData(0.0)
-    val coordinateTemp = MutableLiveData(Constanta.indonesiaLocation)
 
     fun loadStoryLocationData(context: Context, token: String) {
         val client = ApiConfig.getApiService().getStoryListLocation(token, 100)
@@ -64,30 +63,16 @@ class StoryViewModel : ViewModel() {
         lon: String? = null
     ) {
         loading.postValue(View.VISIBLE)
-        "${image.length() / 1024 / 1024} MB" // manual parse from bytes to Mega Bytes
+        "${image.length() / 1024 / 1024} MB"
         val storyDescription = description.toRequestBody("text/plain".toMediaType())
-
         val requestImageFile = image.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
             "photo",
             image.name,
             requestImageFile
         )
-        val client = if (withLocation) {
-            val positionLat = lat?.toRequestBody("text/plain".toMediaType())
-            val positionLon = lon?.toRequestBody("text/plain".toMediaType())
-            ApiConfig.getApiService()
-                .doUploadImage(
-                    token,
-                    imageMultipart,
-                    storyDescription,
-                    positionLat!!,
-                    positionLon!!
-                )
-        } else {
-            ApiConfig.getApiService()
-                .doUploadImage(token, imageMultipart, storyDescription)
-        }
+        val client = ApiConfig.getApiService().doUploadImage(token, imageMultipart, storyDescription)
+
         client.enqueue(object : Callback<StoryUpload> {
             override fun onResponse(call: Call<StoryUpload>, response: Response<StoryUpload>) {
                 when (response.code()) {

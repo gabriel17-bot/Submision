@@ -9,7 +9,6 @@
     <string name="menu_title_info_dialog">Informasi</string>
     <string name="menu_title_bottom_nav_folder">Folder</string>
 
-
     <!-- Content Description layout xml -->
     <string name="content_description_fab_add_story">Story Baru</string>
     <string name="content_descrption_btn_gallery">Pilih gambar dari Galeri</string>
@@ -144,7 +143,7 @@
     <string name="add_widget">Tambah Widget</string>
     <string name="app_widget_description">Widget untuk melihat story terbaru</string>
 
-    <string name="app_name">StoryAppSubmission</string>
+    <string name="app_name">StoryAppFinal</string>
     <string name="menu_add_story">"Tambah Cerita"</string>
     <string name="menu_nav_home">Home</string>
     <string name="menu_nav_setting">Pengaturan</string>

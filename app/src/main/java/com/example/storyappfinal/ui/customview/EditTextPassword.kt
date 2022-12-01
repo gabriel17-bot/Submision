@@ -53,8 +53,7 @@ class EditTextPassword : AppCompatEditText {
         super.onDraw(canvas)
         hint = "Password"
         context.apply {
-            setTextColor(ContextCompat.getColor(this, R.color.dicoding_primary_500))
-            setHintTextColor(ContextCompat.getColor(this, R.color.dicoding_secondary_500))
+            setTextColor(ContextCompat.getColor(this, R.color.primary_500))
         }
         maxLines = 1
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START

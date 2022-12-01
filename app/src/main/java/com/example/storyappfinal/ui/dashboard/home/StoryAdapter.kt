@@ -54,36 +54,14 @@ class StoryAdapter : PagingDataAdapter<Story, StoryAdapter.ViewHolder>(DIFF_CALL
                     val intent = Intent(itemView.context, DetailActivity::class.java)
                     intent.putExtra(Constanta.StoryDetail.UserName.name, story.name)
                     intent.putExtra(Constanta.StoryDetail.ImageURL.name, story.photoUrl)
-                    try {
-                        intent.putExtra(Constanta.StoryDetail.Latitude.name, story.lat.toString())
-                        intent.putExtra(Constanta.StoryDetail.Longitude.name, story.lon.toString())
-                    } catch (e: Exception) {
-                        /* if story don't have location (lat, lon is null) -> skip put extra*/
-                        Log.e(Constanta.TAG_STORY, e.toString())
-                    }
                     intent.putExtra(
                         Constanta.StoryDetail.ContentDescription.name,
                         story.description
-                    )
-                    intent.putExtra(
-                        Constanta.StoryDetail.UploadTime.name,
-                        /*
-                        dynamic set uploaded time locally
-                            en : uploaded + on + 30 April 2022 00.00
-                            id : diupload + pada + 30 April 2022 00.00
-                        */
-                        "${itemView.context.getString(R.string.const_text_uploaded)} ${
-                            itemView.context.getString(
-                                R.string.const_text_time_on
-                            )
-                        } ${Helper.getUploadStoryTime(story.createdAt)}"
-
                     )
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     val optionsCompat: ActivityOptionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
                             itemView.context as Activity,
-                            /* transition between recyclerview & activity detail */
                             androidx.core.util.Pair(storyImage, "story_image"),
                             androidx.core.util.Pair(storyName, "user_name"),
                         )

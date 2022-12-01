@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
-    android:paddingVertical="15dp">
+    android:paddingVertical="15dp"
+    android:background="@color/primary_500">
 
     <ImageView
         android:id="@+id/story_image"
@@ -29,6 +30,7 @@
         android:layout_marginStart="15dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/person_name"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:transitionName="user_name"
         app:layout_constraintStart_toStartOf="parent"

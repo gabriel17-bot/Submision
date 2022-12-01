@@ -41,12 +41,6 @@ class CameraActivity : AppCompatActivity() {
             it.btnGallery.setOnClickListener {
                 startGallery()
             }
-//            it.btnBack.setOnClickListener {
-//                onBackPressed()
-//            }
-//            it.btnInfo.setOnClickListener {
-//                Helper.showDialogInfo(this, getString(R.string.UI_info_camera), Gravity.START)
-//            }
         }
         startCamera()
     }
@@ -56,7 +50,6 @@ class CameraActivity : AppCompatActivity() {
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             val imageAnalysis = ImageAnalysis.Builder()
-                /* compress image to match API requirements -> max file 1MB to be uploaded */
                 .setTargetResolution(Size(480, 720))
                 .build()
             val preview = Preview.Builder()

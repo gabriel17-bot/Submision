@@ -31,7 +31,6 @@ class NewStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewStoryBinding
 
     private var userToken: String? = null
-    var location: LatLng? = null
     private var isPicked: Boolean? = false
     private var getResult: ActivityResultLauncher<Intent>? = null
 
@@ -57,14 +56,12 @@ class NewStoryActivity : AppCompatActivity() {
                         Constanta.LocationPicker.Longitude.name,
                         0.0
                     )
-//                    binding.fieldLocation.text = Helper.parseAddressLocation(this, lat, lon)
                     viewModel.coordinateLatitude.postValue(lat)
                     viewModel.coordinateLongitude.postValue(lon)
                 }
             }
         }
 
-        /* get Token from preference */
         val pref = SettingPreferences.getInstance(dataStore)
         val settingViewModel =
             ViewModelProvider(this, ViewModelSettingFactory(pref))[SettingViewModel::class.java]
@@ -73,7 +70,6 @@ class NewStoryActivity : AppCompatActivity() {
                 userToken = StringBuilder("Bearer ").append(token).toString()
             }
 
-        /* get file from previous action -> camera / gallery */
         val myFile = intent?.getSerializableExtra(EXTRA_PHOTO_RESULT) as File
         val isBackCamera = intent?.getBooleanExtra(EXTRA_CAMERA_MODE, true) as Boolean
         val rotatedBitmap = Helper.rotateBitmap(
@@ -91,25 +87,7 @@ class NewStoryActivity : AppCompatActivity() {
                 )
             }
         }
-//        binding.btnSelectLocation.setOnClickListener {
-//            /* check permission to granted apps pick user location */
-//            if (Helper.isPermissionGranted(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-//                val intentPickLocation = Intent(this, NewStoryPickLocation::class.java)
-//                getResult?.launch(intentPickLocation)
-//            } else {
-//                ActivityCompat.requestPermissions(
-//                    this@NewStoryActivity,
-//                    arrayOf(
-//                        Manifest.permission.ACCESS_FINE_LOCATION,
-//                        Manifest.permission.ACCESS_COARSE_LOCATION
-//                    ),
-//                    Constanta.LOCATION_PERMISSION_CODE
-//                )
-//            }
-//        }
-//        binding.btnClearLocation.setOnClickListener {
-//            viewModel.isLocationPicked.postValue(false)
-//        }
+
         viewModel.let { vm ->
             vm.isSuccessUploadStory.observe(this) {
                 if (it) {
@@ -133,18 +111,12 @@ class NewStoryActivity : AppCompatActivity() {
                     Helper.showDialogInfo(this, it)
                 }
             }
-//            vm.isLocationPicked.observe(this) {
-//                /* if location picked -> show picked location address, else -> hide address & show pick location button */
-//                binding.previewLocation.isVisible = it
-//                binding.btnSelectLocation.isVisible = !it
-//            }
         }
     }
 
     private fun uploadImage(image: File, description: String) {
         if (userToken != null) {
             if (viewModel.isLocationPicked.value != true) {
-                /* location not picked -> upload without location */
                 viewModel.uploadNewStory(
                     this,
                     userToken!!,
@@ -152,7 +124,6 @@ class NewStoryActivity : AppCompatActivity() {
                     description
                 )
             } else {
-                /* location picked -> upload with location */
                 viewModel.uploadNewStory(
                     this,
                     userToken!!,
@@ -171,7 +142,6 @@ class NewStoryActivity : AppCompatActivity() {
         }
     }
 
-    /* handling granted / denied permission from user */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

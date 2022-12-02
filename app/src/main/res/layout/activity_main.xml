@@ -31,4 +31,5 @@
             app:itemTextColor="@color/primary_500"
             app:menu="@menu/bottom_nav_menu" />
     </com.google.android.material.bottomappbar.BottomAppBar>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

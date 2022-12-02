@@ -48,7 +48,7 @@ class StoryViewModel : ViewModel() {
                 loading.postValue(View.GONE)
                 isError.postValue(true)
                 Log.e(Constanta.TAG_STORY, "onFailure Call: ${t.message}")
-                error.postValue("${context.getString(R.string.API_error_fetch_data)} : ${t.message}")
+                error.postValue("${context.getString(R.string.error_fetch_data)} : ${t.message}")
             }
         })
     }
@@ -58,9 +58,6 @@ class StoryViewModel : ViewModel() {
         token: String,
         image: File,
         description: String,
-        withLocation: Boolean = false,
-        lat: String? = null,
-        lon: String? = null
     ) {
         loading.postValue(View.VISIBLE)
         "${image.length() / 1024 / 1024} MB"
@@ -76,8 +73,7 @@ class StoryViewModel : ViewModel() {
         client.enqueue(object : Callback<StoryUpload> {
             override fun onResponse(call: Call<StoryUpload>, response: Response<StoryUpload>) {
                 when (response.code()) {
-                    401 -> error.postValue(context.getString(R.string.API_error_header_token))
-                    413 -> error.postValue(context.getString(R.string.API_error_large_payload))
+                    401 -> error.postValue(context.getString(R.string.header_token))
                     201 -> isSuccessUploadStory.postValue(true)
                     else -> error.postValue("Error ${response.code()} : ${response.message()}")
                 }
@@ -86,8 +82,6 @@ class StoryViewModel : ViewModel() {
 
             override fun onFailure(call: Call<StoryUpload>, t: Throwable) {
                 loading.postValue(View.GONE)
-                Log.e(Constanta.TAG_STORY, "onFailure Call: ${t.message}")
-                error.postValue("${context.getString(R.string.API_error_send_payload)} : ${t.message}")
             }
         })
     }

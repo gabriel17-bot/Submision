@@ -109,14 +109,6 @@ object Helper {
         }
     }
 
-
-    /* get readable date of uploaded story, ie : 30 April 2022 00.00 */
-    fun getUploadStoryTime(timestamp: String): String {
-        val date: Date = parseUTCDate(timestamp)
-        return getSimpleDate(date)
-    }
-
-
     /* -------------------------
     *  CUSTOM DIALOG
     * ------------------------- */
@@ -259,20 +251,4 @@ object Helper {
             "📌 Location Unknown"
         }
     }
-
-
-    /* -------------------------
-    * WIDGET
-    * ------------------------- */
-
-//    fun updateWidgetData(context: Context) {
-//        Log.i("TEST_WIDGET", "Requested update data")
-//        val appWidgetManager = AppWidgetManager.getInstance(context)
-//        val ids: IntArray = appWidgetManager.getAppWidgetIds(
-//            ComponentName(context, RecentStoryWidget::class.java)
-//        )
-//        /* if widget update requested -> refresh widget data */
-//        appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.stack_view)
-//    }
-
 }

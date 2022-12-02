@@ -76,25 +76,17 @@ class LoginFragment : Fragment() {
                 if (token != Constanta.preferenceDefaultValue) (activity as AuthActivity).routeToMainActivity()
             }
         binding.btnAction.setOnClickListener {
-            /*
-            *  NOTE REVIWER LALU :
-            *  - untuk pengecekan logic tidak dilakukan di sini namun di file custom view
-            *  - pengecekan disini -> jika input kosong tampilkan error field kosong
-            *  - selain pengecekan field kosong -> tampilkan logic error dari custom view
-            * */
-
-            /* check if input is empty or not */
-            if (binding.edEmail.text?.length ?: 0 <= 0) {
-                binding.edEmail.error = getString(R.string.UI_validation_empty_email)
+            if ((binding.edEmail.text?.length ?: 0) <= 0) {
+                binding.edEmail.error = getString(R.string.empty_email_password)
                 binding.edEmail.requestFocus()
-            } else if (binding.edPassword.text?.length ?: 0 <= 0) {
-                binding.edPassword.error = getString(R.string.UI_validation_empty_password)
+            } else if ((binding.edPassword.text?.length ?: 0) <= 0) {
+                binding.edPassword.error = getString(R.string.empty_email_password)
                 binding.edPassword.requestFocus()
             }
             /* input not empty -> check contains error */
-            else if (binding.edEmail.error?.length ?: 0 > 0) {
+            else if ((binding.edEmail.error?.length ?: 0) > 0) {
                 binding.edEmail.requestFocus()
-            } else if (binding.edPassword.error?.length ?: 0 > 0) {
+            } else if ((binding.edPassword.error?.length ?: 0) > 0) {
                 binding.edPassword.requestFocus()
             }
             /* not contain error */
@@ -105,12 +97,10 @@ class LoginFragment : Fragment() {
             }
         }
         binding.btnRegister.setOnClickListener {
-            /* while view models contains error -> clear error before replace fragments (to hide dialog error)*/
             viewModel.error.postValue("")
 
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.container, RegisterFragment(), RegisterFragment::class.java.simpleName)
-                /* shared element transition to main activity */
                 addSharedElement(binding.labelAuth, "auth")
                 addSharedElement(binding.edEmail, "email")
                 addSharedElement(binding.edPassword, "password")

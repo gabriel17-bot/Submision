@@ -5,7 +5,7 @@ import androidx.paging.*
 import com.example.storyappfinal.data.database.StoryDatabase
 import com.example.storyappfinal.data.model.Story
 import com.example.storyappfinal.data.repository.remote.ApiService
-import com.example.storyappfinal.data.repository.remote.remotemediator.StoryRemoteMediator
+import com.example.storyappfinal.data.repository.remote.StoryRemoteMediator
 
 class StoryRepository(
     private val storyDatabase: StoryDatabase,
@@ -15,7 +15,7 @@ class StoryRepository(
     fun getStory(): LiveData<PagingData<Story>> {
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
-            config = PagingConfig(pageSize = 5),
+            config = PagingConfig(pageSize = 10),
             remoteMediator = StoryRemoteMediator(storyDatabase, apiService,token),
             pagingSourceFactory = { storyDatabase.storyDao().getAllStory() }
         ).liveData

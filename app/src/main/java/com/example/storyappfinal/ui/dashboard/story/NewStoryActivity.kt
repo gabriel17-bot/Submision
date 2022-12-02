@@ -41,27 +41,6 @@ class NewStoryActivity : AppCompatActivity() {
         binding = ActivityNewStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getResult = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                it.data?.let { res ->
-                    isPicked = res.getBooleanExtra(Constanta.LocationPicker.IsPicked.name, false)
-                    viewModel.isLocationPicked.postValue(isPicked)
-                    val lat = res.getDoubleExtra(
-                        Constanta.LocationPicker.Latitude.name,
-                        0.0
-                    )
-                    val lon = res.getDoubleExtra(
-                        Constanta.LocationPicker.Longitude.name,
-                        0.0
-                    )
-                    viewModel.coordinateLatitude.postValue(lat)
-                    viewModel.coordinateLongitude.postValue(lon)
-                }
-            }
-        }
-
         val pref = SettingPreferences.getInstance(dataStore)
         val settingViewModel =
             ViewModelProvider(this, ViewModelSettingFactory(pref))[SettingViewModel::class.java]
@@ -83,7 +62,7 @@ class NewStoryActivity : AppCompatActivity() {
             } else {
                 Helper.showDialogInfo(
                     this,
-                    getString(R.string.UI_validation_empty_story_description)
+                    getString(R.string.description_story)
                 )
             }
         }
@@ -93,7 +72,7 @@ class NewStoryActivity : AppCompatActivity() {
                 if (it) {
                     val dialog = Helper.dialogInfoBuilder(
                         this,
-                        getString(R.string.API_success_upload_image)
+                        getString(R.string.success_upload)
                     )
                     val btnOk = dialog.findViewById<Button>(R.id.button_ok)
                     btnOk.setOnClickListener {
@@ -129,15 +108,12 @@ class NewStoryActivity : AppCompatActivity() {
                     userToken!!,
                     image,
                     description,
-                    true,
-                    viewModel.coordinateLatitude.value.toString(),
-                    viewModel.coordinateLongitude.value.toString(),
                 )
             }
         } else {
             Helper.showDialogInfo(
                 this,
-                getString(R.string.API_error_header_token)
+                getString(R.string.header_token)
             )
         }
     }
@@ -152,7 +128,7 @@ class NewStoryActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
                     Helper.notifyGivePermission(
                         this,
-                        getString(R.string.UI_validation_permission_location)
+                        getString(R.string.permission_location)
                     )
                 }
             }

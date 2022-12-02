@@ -44,24 +44,4 @@ class DetailActivity : AppCompatActivity() {
         return getStringExtra(key) ?: defaultValue
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            Constanta.STORAGE_PERMISSION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                    Helper.notifyGivePermission(
-                        this,
-                        "Berikan aplikasi izin storage untuk menyimpan story"
-                    )
-                }
-            }
-            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
-
-    }
-
-
 }

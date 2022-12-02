@@ -40,7 +40,7 @@ class EditTextPassword : AppCompatEditText {
             override fun onTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 charLength = s.length
                 error =
-                    if (charLength < 6) context.getString(R.string.UI_validation_password_rules) else null
+                    if (charLength < 6) context.getString(R.string.password_rules) else null
             }
 
             override fun afterTextChanged(edt: Editable?) {

@@ -47,27 +47,9 @@ class ExploreFragment : Fragment(), OnMapReadyCallback{
     ): View {
         binding = FragmentExploreBinding.inflate(inflater, container, false)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
-//        /* multilingual text for spinner */
-//        val zoomLevel = arrayOf(
-//            getString(R.string.const_text_adapter_maps_default),
-//            getString(R.string.const_text_adapter_maps_province),
-//            getString(R.string.const_text_adapter_maps_city),
-//            getString(R.string.const_text_adapter_maps_district),
-//            getString(R.string.const_text_adapter_maps_around)
-//        )
-//
-//        /* set up dropdown location scope */
-//        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-//            requireContext(),
-//            android.R.layout.simple_spinner_item, zoomLevel
-//        )
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
         val mapFragment =
             (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment)
         mapFragment.getMapAsync(this)
-
         return binding.root
     }
 
@@ -79,7 +61,6 @@ class ExploreFragment : Fragment(), OnMapReadyCallback{
         mMap.uiSettings.isMapToolbarEnabled = true
         mMap.uiSettings.isTiltGesturesEnabled = true
 
-        /* init story with location data -> add markers */
         storyViewModel.storyList.observe(viewLifecycleOwner) { storyList ->
             for (story in storyList) {
                 mMap.addMarker(
@@ -92,9 +73,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback{
                 )?.tag = story
             }
         }
-
         getMyLocation()
-
         storyViewModel.loadStoryLocationData(
             requireContext(),
             (activity as MainActivity).getUserToken()

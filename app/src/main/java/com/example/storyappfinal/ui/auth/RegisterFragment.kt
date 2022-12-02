@@ -42,7 +42,7 @@ class RegisterFragment : Fragment() {
                 if (!register.error) {
                     val dialog = Helper.dialogInfoBuilder(
                         (activity as AuthActivity),
-                        getString(R.string.UI_info_successful_register_user)
+                        getString(R.string.successful_register)
                     )
                     val btnOk = dialog.findViewById<Button>(R.id.button_ok)
                     btnOk.setOnClickListener {
@@ -65,30 +65,22 @@ class RegisterFragment : Fragment() {
             switchLogin()
         }
         binding.btnAction.setOnClickListener {
-            /*
-            *  NOTE REVIWER LALU :
-            *  - untuk pengecekan logic tidak dilakukan di sini namun di file custom view
-            *  - pengecekan disini -> jika input kosong tampilkan error field kosong
-            *  - selain pengecekan field kosong -> tampilkan logic error dari custom view
-            * */
-
-            /* check if input is empty or not */
-            if (binding.edName.text?.length ?: 0 <= 0) {
-                binding.edName.error = getString(R.string.UI_validation_empty_name)
+            if ((binding.edName.text?.length ?: 0) <= 0) {
+                binding.edName.error = getString(R.string.empty_email_password_name)
                 binding.edName.requestFocus()
-            } else if (binding.edEmail.text?.length ?: 0 <= 0) {
-                binding.edEmail.error = getString(R.string.UI_validation_empty_email)
+            } else if ((binding.edEmail.text?.length ?: 0) <= 0) {
+                binding.edEmail.error = getString(R.string.empty_email_password_name)
                 binding.edEmail.requestFocus()
-            } else if (binding.edPassword.text?.length ?: 0 <= 0) {
-                binding.edPassword.error = getString(R.string.UI_validation_empty_password)
+            } else if ((binding.edPassword.text?.length ?: 0) <= 0) {
+                binding.edPassword.error = getString(R.string.empty_email_password_name)
                 binding.edPassword.requestFocus()
             }
             /* input not empty -> check contains error */
-            else if (binding.edEmail.error?.length ?: 0 > 0) {
+            else if ((binding.edEmail.error?.length ?: 0) > 0) {
                 binding.edEmail.requestFocus()
-            } else if (binding.edPassword.error?.length ?: 0 > 0) {
+            } else if ((binding.edPassword.error?.length ?: 0) > 0) {
                 binding.edPassword.requestFocus()
-            } else if (binding.edName.error?.length ?: 0 > 0) {
+            } else if ((binding.edName.error?.length ?: 0) > 0) {
                 binding.edName.requestFocus()
             }
             /* not contain error */
@@ -102,12 +94,9 @@ class RegisterFragment : Fragment() {
     }
 
     private fun switchLogin() {
-        /* while view models contains error -> clear error before replace fragments (to hide dialog error)*/
         viewModel.error.postValue("")
-
         parentFragmentManager.beginTransaction().apply {
             replace(R.id.container, LoginFragment(), LoginFragment::class.java.simpleName)
-            /* shared element transition to main activity */
             addSharedElement(binding.labelAuth, "auth")
             addSharedElement(binding.edEmail, "email")
             addSharedElement(binding.edPassword, "password")

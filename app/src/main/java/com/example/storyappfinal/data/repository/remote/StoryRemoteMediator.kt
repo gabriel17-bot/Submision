@@ -1,4 +1,4 @@
-package com.example.storyappfinal.data.repository.remote.remotemediator
+package com.example.storyappfinal.data.repository.remote
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -8,7 +8,6 @@ import androidx.room.withTransaction
 import com.example.storyappfinal.data.database.StoryDatabase
 import com.example.storyappfinal.data.model.Story
 import com.example.storyappfinal.data.model.StoryRemoteKeys
-import com.example.storyappfinal.data.repository.remote.ApiService
 
 @OptIn(ExperimentalPagingApi::class)
 class StoryRemoteMediator(

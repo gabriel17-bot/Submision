@@ -36,11 +36,9 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 it
             )
         }
-
         binding.swipeRefresh.setOnRefreshListener {
             onRefresh()
         }
-
         binding.rvStory.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)

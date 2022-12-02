@@ -5,13 +5,13 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/menu_title_bottom_nav_home"
+        android:title="@string/menu_nav_home"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/navigation_explore"
         android:icon="@drawable/ic_baseline_explore_24"
-        android:title="@string/menu_title_bottom_nav_explore"
+        android:title="@string/menu_nav_map"
         app:showAsAction="ifRoom" />
 
     <item
@@ -23,6 +23,6 @@
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="@string/menu_title_bottom_nav_profile"
+        android:title="@string/menu_nav_setting"
         app:showAsAction="ifRoom" />
 </menu>

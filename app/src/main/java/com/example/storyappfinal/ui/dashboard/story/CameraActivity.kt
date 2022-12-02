@@ -69,7 +69,7 @@ class CameraActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 Helper.showDialogInfo(
                     this,
-                    StringBuilder(getString(R.string.UI_error_camera_error))
+                    StringBuilder(getString(R.string.error_take_photo))
                         .append(" : ")
                         .append(e.message)
                         .toString()
@@ -102,7 +102,7 @@ class CameraActivity : AppCompatActivity() {
         val intent = Intent()
         intent.action = Intent.ACTION_GET_CONTENT
         intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, getString(R.string.UI_info_intent_image))
+        val chooser = Intent.createChooser(intent, getString(R.string.intent_image))
         openGalleryLauncher.launch(chooser)
     }
 

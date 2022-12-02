@@ -1,4 +1,4 @@
-package com.example.storyappfinal.data.repository.room
+package com.example.storyappfinal.data.repository.repository
 
 import androidx.lifecycle.LiveData
 import androidx.paging.*

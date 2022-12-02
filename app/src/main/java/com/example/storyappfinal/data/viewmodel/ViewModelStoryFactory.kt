@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.storyappfinal.data.database.StoryDatabase
 import com.example.storyappfinal.data.repository.remote.ApiService
-import com.example.storyappfinal.data.repository.room.StoryRepository
+import com.example.storyappfinal.data.repository.repository.StoryRepository
 
 
 class ViewModelStoryFactory(val context: Context, private val apiService: ApiService, val token:String) :

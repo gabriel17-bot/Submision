@@ -66,19 +66,10 @@ object Helper {
         context.startActivity(intent)
     }
 
-    /* -------------------------
-    *  DATE FORMAT
-    * ------------------------- */
-    private const val timestampFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-    private const val simpleDateFormat = "dd MMM yyyy HH.mm"
-
     /*
     * DATE INSTANCE
     * */
     private var defaultDate = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
-
-    @SuppressLint("ConstantLocale")
-    val simpleDate = SimpleDateFormat(simpleDateFormat, Locale.getDefault())
 
     /* curent date in date */
     private fun getCurrentDate(): Date {
@@ -93,21 +84,6 @@ object Helper {
         "ddMMyyHHmmssSS",
         Locale.getDefault()
     ).format(System.currentTimeMillis())
-
-
-    /* simpleDate (Date) to string */
-    private fun getSimpleDate(date: Date): String = simpleDate.format(date)
-
-    /* string UTC format to date */
-    private fun parseUTCDate(timestamp: String): Date {
-        return try {
-            val formatter = SimpleDateFormat(timestampFormat, Locale.getDefault())
-            formatter.timeZone = TimeZone.getTimeZone("UTC")
-            formatter.parse(timestamp) as Date
-        } catch (e: ParseException) {
-            getCurrentDate()
-        }
-    }
 
     /* -------------------------
     *  CUSTOM DIALOG

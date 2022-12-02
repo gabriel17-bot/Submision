@@ -28,8 +28,6 @@ class StoryViewModel : ViewModel() {
     val error = MutableLiveData("")
     val isError = MutableLiveData(true)
     val isLocationPicked = MutableLiveData(false)
-    val coordinateLatitude = MutableLiveData(0.0)
-    val coordinateLongitude = MutableLiveData(0.0)
 
     fun loadStoryLocationData(context: Context, token: String) {
         val client = ApiConfig.getApiService().getStoryListLocation(token, 100)

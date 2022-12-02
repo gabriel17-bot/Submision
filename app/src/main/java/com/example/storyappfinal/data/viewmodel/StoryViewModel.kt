@@ -11,6 +11,7 @@ import com.example.storyappfinal.data.model.StoryUpload
 import com.example.storyappfinal.data.repository.remote.ApiConfig
 import com.example.storyappfinal.utils.Constanta
 import com.example.storyappfinal.R
+import com.example.storyappfinal.data.repository.remote.ApiService
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -29,8 +30,8 @@ class StoryViewModel : ViewModel() {
     val isError = MutableLiveData(true)
     val isLocationPicked = MutableLiveData(false)
 
-    fun loadStoryLocationData(context: Context, token: String) {
-        val client = ApiConfig.getApiService().getStoryListLocation(token, 100)
+    fun loadStoryLocationData(context: Context, token: String, apiService: ApiService) {
+        val client = apiService.getStoryListLocation(token, 100)
         client.enqueue(object : Callback<StoryList> {
             override fun onResponse(call: Call<StoryList>, response: Response<StoryList>) {
                 if (response.isSuccessful) {
@@ -67,7 +68,6 @@ class StoryViewModel : ViewModel() {
             requestImageFile
         )
         val client = ApiConfig.getApiService().doUploadImage(token, imageMultipart, storyDescription)
-
         client.enqueue(object : Callback<StoryUpload> {
             override fun onResponse(call: Call<StoryUpload>, response: Response<StoryUpload>) {
                 when (response.code()) {

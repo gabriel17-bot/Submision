@@ -5,8 +5,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ApiConfig {
-    companion object{
+object ApiConfig {
         fun getApiService(): ApiService {
             val loggingInterceptor = if(androidx.viewbinding.BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -23,5 +22,4 @@ class ApiConfig {
                 .build()
             return retrofit.create(ApiService::class.java)
         }
-    }
 }

@@ -16,6 +16,7 @@ import com.example.storyappfinal.utils.Helper
 import com.example.storyappfinal.utils.SettingPreferences
 import com.example.storyappfinal.utils.dataStore
 import com.example.storyappfinal.R
+import com.example.storyappfinal.data.repository.remote.ApiConfig
 import com.example.storyappfinal.databinding.FragmentLoginBinding
 
 
@@ -93,7 +94,7 @@ class LoginFragment : Fragment() {
             else {
                 val email = binding.edEmail.text.toString()
                 val password = binding.edPassword.text.toString()
-                viewModel.login(email, password)
+                viewModel.login(email, password, ApiConfig.getApiService())
             }
         }
         binding.btnRegister.setOnClickListener {

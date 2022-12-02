@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.storyappfinal.data.viewmodel.AuthViewModel
 import com.example.storyappfinal.utils.Helper
 import com.example.storyappfinal.R
+import com.example.storyappfinal.data.repository.remote.ApiConfig
 import com.example.storyappfinal.databinding.FragmentRegisterBinding
 
 class RegisterFragment : Fragment() {
@@ -88,7 +89,7 @@ class RegisterFragment : Fragment() {
                 val name = binding.edName.text.toString()
                 val email = binding.edEmail.text.toString()
                 val password = binding.edPassword.text.toString()
-                viewModel.register(name, email, password)
+                viewModel.register(name, email, password, ApiConfig.getApiService())
             }
         }
     }

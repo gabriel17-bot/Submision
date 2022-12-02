@@ -22,6 +22,7 @@ import com.example.storyappfinal.ui.detail.DetailActivity
 import com.example.storyappfinal.utils.Constanta
 import com.example.storyappfinal.utils.Helper
 import com.example.storyappfinal.R
+import com.example.storyappfinal.data.repository.remote.ApiConfig
 import com.example.storyappfinal.databinding.FragmentExploreBinding
 import com.example.storyappfinal.ui.dashboard.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -76,7 +77,7 @@ class ExploreFragment : Fragment(), OnMapReadyCallback{
         getMyLocation()
         storyViewModel.loadStoryLocationData(
             requireContext(),
-            (activity as MainActivity).getUserToken()
+            (activity as MainActivity).getUserToken(), ApiConfig.getApiService()
         )
     }
 

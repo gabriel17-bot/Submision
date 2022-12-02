@@ -6,13 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.storyappfinal.data.model.Login
 import com.example.storyappfinal.data.model.Register
-import com.example.storyappfinal.data.repository.remote.ApiConfig
+import com.example.storyappfinal.data.repository.remote.ApiService
 import com.example.storyappfinal.utils.Constanta
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class AuthViewModel : ViewModel() {
 
@@ -22,10 +21,10 @@ class AuthViewModel : ViewModel() {
     val loginResult = MutableLiveData<Login>()
     val registerResult = MutableLiveData<Register>()
 
-    fun login(email: String, password: String) {
+    fun login(email: String, password: String, apiService: ApiService) {
         tempEmail.postValue(email)
         loading.postValue(View.VISIBLE)
-        val client = ApiConfig.getApiService().doLogin(email, password)
+        val client = apiService.doLogin(email, password)
         client.enqueue(object : Callback<Login> {
             override fun onResponse(call: Call<Login>, response: Response<Login>) {
                 if (response.isSuccessful) {
@@ -48,9 +47,9 @@ class AuthViewModel : ViewModel() {
         })
     }
 
-    fun register(name: String, email: String, password: String) {
+    fun register(name: String, email: String, password: String, apiService: ApiService) {
         loading.postValue(View.VISIBLE)
-        val client = ApiConfig.getApiService().doRegister(name, email, password)
+        val client = apiService.doRegister(name, email, password)
         client.enqueue(object : Callback<Register> {
             override fun onResponse(call: Call<Register>, response: Response<Register>) {
                 if (response.isSuccessful) {

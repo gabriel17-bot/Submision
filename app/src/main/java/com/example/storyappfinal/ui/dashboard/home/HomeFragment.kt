@@ -30,7 +30,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         val mainViewModel = (activity as MainActivity).getStoryViewModel()
-        mainViewModel.story.observe(viewLifecycleOwner) {
+        mainViewModel.story().observe(viewLifecycleOwner) {
             rvAdapter.submitData(
                 lifecycle,
                 it

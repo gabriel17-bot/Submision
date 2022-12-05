@@ -22,6 +22,7 @@ import com.example.storyappfinal.utils.Helper
 import com.example.storyappfinal.utils.SettingPreferences
 import com.example.storyappfinal.utils.dataStore
 import com.example.storyappfinal.R
+import com.example.storyappfinal.data.repository.remote.ApiConfig
 import com.example.storyappfinal.databinding.ActivityNewStoryBinding
 import com.google.android.gms.maps.model.LatLng
 import java.io.File
@@ -100,7 +101,8 @@ class NewStoryActivity : AppCompatActivity() {
                     this,
                     userToken!!,
                     image,
-                    description
+                    description,
+                    ApiConfig.getApiService()
                 )
             } else {
                 viewModel.uploadNewStory(
@@ -108,6 +110,7 @@ class NewStoryActivity : AppCompatActivity() {
                     userToken!!,
                     image,
                     description,
+                    ApiConfig.getApiService()
                 )
             }
         } else {

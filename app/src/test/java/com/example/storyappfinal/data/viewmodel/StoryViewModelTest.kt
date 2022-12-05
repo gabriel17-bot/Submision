@@ -4,6 +4,12 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.storyappfinal.data.model.StoryList
 import com.example.storyappfinal.data.model.StoryUpload
 import com.example.storyappfinal.data.repository.remote.ApiService
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -11,8 +17,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.mock
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Call
+import java.io.File
 
 @RunWith(MockitoJUnitRunner::class)
 class StoryViewModelTest {
@@ -41,11 +49,24 @@ class StoryViewModelTest {
         Mockito.`when`(mockApiService.getStoryListLocation(dummyToken,100)).thenReturn(mockCallLoadStory)
         storyViewModel.loadStoryLocationData(context,dummyToken,mockApiService)
         Mockito.verify(mockApiService).getStoryListLocation(dummyToken, 100)
+        Assert.assertNotNull(storyViewModel.loadStoryLocationData(context,dummyToken,mockApiService))
     }
 
     @Test
     fun uploadNewStory() {
-        val dummyToken = "asldjnfoeubasmdlawkdn"
+        val dummyToken = "asldjnfoeubasmdlawkdnqweasdbrgs"
         val dummyDescription = "Ini adalah deskripsi dari story yang di upload"
+        val requestDescription = dummyDescription.toRequestBody("text/plain".toMediaType())
+        val mockImageFile = mock(File::class.java)
+        val requestImageFile = mockImageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val fakeImageMultipart = MultipartBody.Part.createFormData(
+            "photo",
+            mockImageFile.name,
+            requestImageFile
+        )
+        Mockito.`when`(mockApiService.doUploadImage(dummyToken, fakeImageMultipart, requestDescription)).thenReturn(mockCallUpload)
+        storyViewModel.uploadNewStory(context,dummyToken, mockImageFile, dummyDescription, mockApiService)
+        Mockito.verify(mockApiService).doUploadImage(dummyToken, fakeImageMultipart, requestDescription)
+
     }
 }

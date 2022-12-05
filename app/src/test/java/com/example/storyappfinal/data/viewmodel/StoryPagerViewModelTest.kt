@@ -19,9 +19,9 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class StoryPagerViewModelTest {
 
+    private lateinit var storyPagerViewModel: StoryPagerViewModel
     @Mock
     private lateinit var storyRepository: StoryRepository
-    private lateinit var storyPagerViewModel: StoryPagerViewModel
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -33,6 +33,7 @@ class StoryPagerViewModelTest {
 
     @Test
     fun getStory() {
+        //Testing Get Story Should Not Null and Return Success
         val expectedStory = MutableLiveData<PagingData<Story>>()
         val fakePagingData = PagingData.from(listOf(
             Story(
@@ -46,8 +47,8 @@ class StoryPagerViewModelTest {
         expectedStory.value = fakePagingData
         Mockito.`when`(storyRepository.getStory()).thenReturn(expectedStory)
         val actualStory = storyPagerViewModel.story()
-        println(actualStory.value)
         Mockito.verify(storyRepository).getStory()
         Assert.assertEquals(expectedStory.value, actualStory.value)
+        Assert.assertNotNull(actualStory.value)
     }
 }

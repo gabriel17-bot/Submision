@@ -19,7 +19,7 @@ import com.example.storyappfinal.data.repository.remote.ApiConfig
 import com.example.storyappfinal.ui.auth.AuthActivity
 import com.example.storyappfinal.ui.dashboard.explore.ExploreFragment
 import com.example.storyappfinal.ui.dashboard.home.HomeFragment
-import com.example.storyappfinal.ui.dashboard.profile.ProfileFragment
+import com.example.storyappfinal.ui.dashboard.setting.ProfileFragment
 import com.example.storyappfinal.ui.dashboard.story.CameraActivity
 import com.example.storyappfinal.utils.Constanta
 import com.example.storyappfinal.utils.Helper
@@ -28,7 +28,6 @@ import com.example.storyappfinal.utils.dataStore
 import com.example.storyappfinal.R
 import com.example.storyappfinal.data.viewmodel.*
 import com.example.storyappfinal.databinding.ActivityMainBinding
-import kotlinx.coroutines.DelicateCoroutinesApi
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -92,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                         false
                     }
                 }
-                R.id.navigation_profile -> {
+                R.id.navigation_setting -> {
                     switchFragment(fragmentProfile)
                     true
                 }

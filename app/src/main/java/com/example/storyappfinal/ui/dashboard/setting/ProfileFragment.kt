@@ -1,9 +1,6 @@
-package com.example.storyappfinal.ui.dashboard.profile
+package com.example.storyappfinal.ui.dashboard.setting
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.storyappfinal.data.viewmodel.SettingViewModel
 import com.example.storyappfinal.data.viewmodel.ViewModelSettingFactory
 import com.example.storyappfinal.utils.Constanta
-import com.example.storyappfinal.utils.Helper
 import com.example.storyappfinal.utils.SettingPreferences
 import com.example.storyappfinal.utils.dataStore
-import com.example.storyappfinal.R
 import com.example.storyappfinal.databinding.FragmentProfileBinding
 import com.example.storyappfinal.ui.dashboard.MainActivity
 

@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.storyappfinal.data.model.Login
 import com.example.storyappfinal.data.model.Register
 import com.example.storyappfinal.data.repository.remote.ApiService
+import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -35,16 +36,19 @@ class AuthViewModelTest {
 
     @Test
     fun login() {
+        //Testing login Should Not Null and Return Success
         val dummyEmail = "jamal123@gmail.com"
         val dummyPassword = "passwordnyaadadeh"
 
         Mockito.`when`(mockApiService.doLogin(dummyEmail, dummyPassword)).thenReturn(mockCallLogin)
         authViewModel.login(dummyEmail, dummyPassword, mockApiService)
         Mockito.verify(mockApiService).doLogin(dummyEmail, dummyPassword)
+        Assert.assertNotNull(authViewModel.login(dummyEmail, dummyPassword, mockApiService))
     }
 
     @Test
     fun register() {
+        //Testing register Should Not Null and Return Success
         val dummyName = "Jamal"
         val dummyEmail = "ahmad@gmail.com"
         val dummyPassword = "ahmadjamal123"
@@ -52,6 +56,7 @@ class AuthViewModelTest {
         Mockito.`when`(mockApiService.doRegister(dummyEmail, dummyPassword, dummyName)).thenReturn(mockCallRegister)
         authViewModel.register(dummyEmail, dummyPassword, dummyName, mockApiService)
         Mockito.verify(mockApiService).doRegister(dummyEmail, dummyPassword, dummyName)
-        Mockito.verify(mockApiService, Mockito.never()).doRegister(dummyName, dummyEmail, dummyPassword)
+//        Mockito.verify(mockApiService, Mockito.never()).doRegister(dummyName, dummyEmail, dummyPassword)
+        Assert.assertNotNull(authViewModel.register(dummyEmail, dummyPassword, dummyName, mockApiService))
     }
 }

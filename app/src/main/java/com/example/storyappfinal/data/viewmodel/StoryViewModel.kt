@@ -56,7 +56,7 @@ class StoryViewModel : ViewModel() {
         context: Context,
         token: String,
         image: File,
-        description: String,
+        description: String, apiService: ApiService
     ) {
         loading.postValue(View.VISIBLE)
         "${image.length() / 1024 / 1024} MB"
@@ -67,7 +67,7 @@ class StoryViewModel : ViewModel() {
             image.name,
             requestImageFile
         )
-        val client = ApiConfig.getApiService().doUploadImage(token, imageMultipart, storyDescription)
+        val client = apiService.doUploadImage(token, imageMultipart, storyDescription)
         client.enqueue(object : Callback<StoryUpload> {
             override fun onResponse(call: Call<StoryUpload>, response: Response<StoryUpload>) {
                 when (response.code()) {

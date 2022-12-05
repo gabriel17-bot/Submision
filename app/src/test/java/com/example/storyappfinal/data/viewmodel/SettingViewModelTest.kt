@@ -42,7 +42,7 @@ class SettingViewModelTest {
     }
 
     @Test
-    fun getUserPreferences() {
+    suspend fun getUserPreferences() {
         val dummyPropertyUserID = Constanta.UserPreferences.UserUID.name
         val dummyFlowUserId = flow { emit("UserId pengguna") }
         Mockito.`when`(pref.getUserUid()).thenReturn(dummyFlowUserId)
@@ -56,13 +56,41 @@ class SettingViewModelTest {
         val actualResultUserToken = settingViewModel.getUserPreferences(dummyPropertyUserToken)
         val expectedResultUserToken = dummyFlowUserToken.asLiveData()
         Assert.assertEquals(expectedResultUserToken.value, actualResultUserToken.value)
+
+        val dummyPropertyUserName = Constanta.UserPreferences.UserName.name
+        val dummyFlowUserName = flow { emit("UserName pengguna") }
+        Mockito.`when`(pref.getUserName()).thenReturn(dummyFlowUserName)
+        val actualResultUserName = settingViewModel.getUserPreferences(dummyPropertyUserName)
+        val expectedResultUserName = dummyFlowUserName.asLiveData()
+        Assert.assertEquals(expectedResultUserName.value, actualResultUserName.value)
+
+        val dummyPropertyUserEmail = Constanta.UserPreferences.UserEmail.name
+        val dummyFlowUserEmail = flow { emit("UserEmail pengguna") }
+        Mockito.`when`(pref.getUserEmail()).thenReturn(dummyFlowUserEmail)
+        val actualResultUserEmail = settingViewModel.getUserPreferences(dummyPropertyUserEmail)
+        val expectedResultUserEmail = dummyFlowUserEmail.asLiveData()
+        Assert.assertEquals(expectedResultUserEmail.value, actualResultUserEmail.value)
+
+        val dummyPropertyUserLastLogin = Constanta.UserPreferences.UserLastLogin.name
+        val dummyFlowUserLastLogin = flow { emit("UserLastLogin pengguna") }
+        Mockito.`when`(pref.getUserLastLogin()).thenReturn(dummyFlowUserLastLogin)
+        val actualResultUserLastLogin = settingViewModel.getUserPreferences(dummyPropertyUserLastLogin)
+        val expectedResultUserLastLogin = dummyFlowUserLastLogin.asLiveData()
+        Assert.assertEquals(expectedResultUserLastLogin.value, actualResultUserLastLogin.value)
+
     }
 
     @Test
-    fun setUserPreferences() {
+    suspend fun setUserPreferences() {
+        val dummyUserToken = "asdwaiopndnlnefoihwe"
+        val dummyUserUid = "UserUid"
+        val dummyUserName = "Username"
+        val dummyUserEmail = "userEmail"
+        Mockito.verify(pref.saveLoginSession(dummyUserToken,dummyUserUid,dummyUserName,dummyUserEmail))
     }
 
     @Test
-    fun clearUserPreferences() {
+    suspend fun clearUserPreferences() {
+        Mockito.verify(pref.clearLoginSession())
     }
 }

@@ -37,34 +37,12 @@ class EditTextClear : AppCompatEditText, View.OnTouchListener {
                 // Do nothing.
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (s.toString().isNotEmpty()) showClearButton() else hideClearButton()
+                s.toString().isNotEmpty()
             }
             override fun afterTextChanged(s: Editable) {
                 // Do nothing.
             }
         })
-    }
-
-    private fun showClearButton() {
-        setButtonDrawables(endOfTheText = clearButtonImage)
-    }
-
-    private fun hideClearButton() {
-        setButtonDrawables()
-    }
-
-    private fun setButtonDrawables(
-        startOfTheText: Drawable? = null,
-        topOfTheText: Drawable? = null,
-        endOfTheText: Drawable? = null,
-        bottomOfTheText: Drawable? = null
-    ) {
-        setCompoundDrawablesWithIntrinsicBounds(
-            startOfTheText,
-            topOfTheText,
-            endOfTheText,
-            bottomOfTheText
-        )
     }
 
     override fun onTouch(v: View?, event: MotionEvent): Boolean {
@@ -86,14 +64,12 @@ class EditTextClear : AppCompatEditText, View.OnTouchListener {
             if (isClearButtonClicked) {
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        showClearButton()
                         return true
                     }
                     MotionEvent.ACTION_UP -> {
                         when {
                             text != null -> text?.clear()
                         }
-                        hideClearButton()
                         return true
                     }
                     else -> return false

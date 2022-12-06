@@ -29,10 +29,6 @@ import java.util.*
 
 object Helper {
 
-    /* -------------------------
-    * PERMISSION
-    * ------------------------- */
-
     fun notifyGivePermission(context: Context, message: String) {
         val dialog = dialogInfoBuilder(context, message)
         val button = dialog.findViewById<Button>(R.id.button_ok)
@@ -57,17 +53,10 @@ object Helper {
         context.startActivity(intent)
     }
 
-    /*
-    * DATE INSTANCE
-    * */
     private var defaultDate = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
 
-    /* curent date in date */
-    private fun getCurrentDate(): Date {
-        return Date()
-    }
+    private fun getCurrentDate(): Date { return Date() }
 
-    /* curent date in string */
     fun getCurrentDateString(): String = defaultDate.format(getCurrentDate())
 
     @SuppressLint("ConstantLocale")
@@ -76,11 +65,6 @@ object Helper {
         Locale.getDefault()
     ).format(System.currentTimeMillis())
 
-    /* -------------------------
-    *  CUSTOM DIALOG
-    * ------------------------- */
-
-    /* custom dialog info builder -> reuse to another invocation with custom ok button action */
     fun dialogInfoBuilder(
         context: Context,
         message: String,
@@ -107,7 +91,6 @@ object Helper {
         return dialog
     }
 
-    /* ready use to go dialog with related params */
     fun showDialogInfo(
         context: Context,
         message: String,
@@ -120,10 +103,6 @@ object Helper {
         }
         dialog.show()
     }
-
-    /* -------------------------
-    * FILE HELPER & BITMAP
-    * ------------------------- */
 
     private fun createCustomTempFile(context: Context): File {
         val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -148,12 +127,10 @@ object Helper {
         return List(len) { alphabet.random() }.joinToString("")
     }
 
-    /* get default exported file name */
     fun getDefaultFileName(): String {
         return "STORY-${getRandomString()}.jpg"
     }
 
-    /* create export file (story / download) to exact path location */
     fun createFile(
         application: Application,
         folder: String = "story",
@@ -196,11 +173,6 @@ object Helper {
         }
     }
 
-    /* -------------------------
-    * GEOLOCATION & GEOCODER
-    * ------------------------- */
-
-    /* parse lat lon coordinate into readable address */
     fun parseAddressLocation(
         context: Context,
         lat: Double,
@@ -212,10 +184,10 @@ object Helper {
         return if (geoLocation.size > 0) {
             val location = geoLocation[0]
             val fullAddress = location.getAddressLine(0)
-            StringBuilder("📌 ")
+            StringBuilder(" ")
                 .append(fullAddress).toString()
         } else {
-            "📌 Location Unknown"
+            "Location Unknown"
         }
     }
 }

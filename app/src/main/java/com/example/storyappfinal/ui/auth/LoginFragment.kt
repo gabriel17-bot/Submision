@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.storyappfinal.data.viewmodel.AuthViewModel
 import com.example.storyappfinal.data.viewmodel.SettingViewModel
-import com.example.storyappfinal.data.viewmodel.ViewModelSettingFactory
+import com.example.storyappfinal.utils.ModelSettingFactory
 import com.example.storyappfinal.utils.Constanta
 import com.example.storyappfinal.utils.Helper
 import com.example.storyappfinal.utils.SettingPreferences
@@ -18,7 +18,6 @@ import com.example.storyappfinal.utils.dataStore
 import com.example.storyappfinal.R
 import com.example.storyappfinal.data.repository.remote.ApiConfig
 import com.example.storyappfinal.databinding.FragmentLoginBinding
-
 
 class LoginFragment : Fragment() {
     companion object {
@@ -48,11 +47,10 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val pref = SettingPreferences.getInstance((activity as AuthActivity).dataStore)
         val settingViewModel =
-            ViewModelProvider(this, ViewModelSettingFactory(pref))[SettingViewModel::class.java]
+            ViewModelProvider(this, ModelSettingFactory(pref))[SettingViewModel::class.java]
 
         viewModel.let { vm ->
             vm.loginResult.observe(viewLifecycleOwner) { login ->
-                // success login process triggered -> save preferences
                 settingViewModel.setUserPreferences(
                     login.loginResult.token,
                     login.loginResult.userId,
@@ -73,7 +71,6 @@ class LoginFragment : Fragment() {
         }
         settingViewModel.getUserPreferences(Constanta.UserPreferences.UserToken.name)
             .observe(viewLifecycleOwner) { token ->
-                // if token triggered change -> redirect to Main Activity
                 if (token != Constanta.preferenceDefaultValue) (activity as AuthActivity).routeToMainActivity()
             }
         binding.btnAction.setOnClickListener {
@@ -84,13 +81,11 @@ class LoginFragment : Fragment() {
                 binding.edPassword.error = getString(R.string.empty_email_password)
                 binding.edPassword.requestFocus()
             }
-            /* input not empty -> check contains error */
             else if ((binding.edEmail.error?.length ?: 0) > 0) {
                 binding.edEmail.requestFocus()
             } else if ((binding.edPassword.error?.length ?: 0) > 0) {
                 binding.edPassword.requestFocus()
             }
-            /* not contain error */
             else {
                 val email = binding.edEmail.text.toString()
                 val password = binding.edPassword.text.toString()
@@ -110,5 +105,4 @@ class LoginFragment : Fragment() {
             }
         }
     }
-
 }

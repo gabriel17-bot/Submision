@@ -1,16 +1,15 @@
 @file:Suppress("UNCHECKED_CAST")
-
-package com.example.storyappfinal.data.viewmodel
+package com.example.storyappfinal.utils
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.storyappfinal.data.database.StoryDatabase
 import com.example.storyappfinal.data.repository.remote.ApiService
-import com.example.storyappfinal.data.repository.repository.StoryRepository
+import com.example.storyappfinal.data.repository.StoryRepository
+import com.example.storyappfinal.data.viewmodel.StoryPagerViewModel
 
-
-class ViewModelStoryFactory(val context: Context, private val apiService: ApiService, val token:String) :
+class ModelStoryFactory(val context: Context, private val apiService: ApiService, val token:String) :
     ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(StoryPagerViewModel::class.java)) {

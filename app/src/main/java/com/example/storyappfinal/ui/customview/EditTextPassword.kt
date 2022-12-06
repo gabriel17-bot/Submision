@@ -44,7 +44,7 @@ class EditTextPassword : AppCompatEditText {
             }
 
             override fun afterTextChanged(edt: Editable?) {
-
+                // do nothing
             }
         })
     }

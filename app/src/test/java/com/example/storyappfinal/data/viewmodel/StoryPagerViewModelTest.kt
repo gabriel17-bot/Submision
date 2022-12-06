@@ -4,12 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
 import com.example.storyappfinal.data.model.Story
-import com.example.storyappfinal.data.repository.repository.StoryRepository
+import com.example.storyappfinal.data.repository.StoryRepository
 import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
-
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock

@@ -8,7 +8,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.storyappfinal.R
 import com.example.storyappfinal.databinding.ActivityAuthBinding
-import com.example.storyappfinal.ui.dashboard.MainActivity
+import com.example.storyappfinal.ui.main.MainActivity
 
 class AuthActivity : AppCompatActivity() {
 
@@ -48,6 +48,4 @@ class AuthActivity : AppCompatActivity() {
         }
         supportActionBar?.hide()
     }
-
-
 }

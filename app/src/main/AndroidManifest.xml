@@ -37,9 +37,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.dashboard.story.NewStoryActivity" />
-        <activity android:name=".ui.dashboard.story.CameraActivity" />
-        <activity android:name=".ui.dashboard.MainActivity" />
+        <activity android:name=".ui.main.story.NewStoryActivity" />
+        <activity android:name=".ui.main.story.CameraActivity" />
+        <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.detail.DetailActivity" />
     </application>
 

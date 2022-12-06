@@ -7,13 +7,9 @@ import com.example.storyappfinal.utils.SettingPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.test.*
 import org.junit.*
 import org.junit.Assert.*
-
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -78,7 +74,6 @@ class SettingViewModelTest {
         val actualResultUserLastLogin = settingViewModel.getUserPreferences(dummyPropertyUserLastLogin)
         val expectedResultUserLastLogin = dummyFlowUserLastLogin.asLiveData()
         Assert.assertEquals(expectedResultUserLastLogin.value, actualResultUserLastLogin.value)
-
     }
 
     @Test
@@ -87,11 +82,15 @@ class SettingViewModelTest {
         val dummyUserUid = "UserUid"
         val dummyUserName = "Username"
         val dummyUserEmail = "userEmail"
-        pref.saveLoginSession(dummyUserToken,dummyUserUid,dummyUserName,dummyUserEmail)
+        settingViewModel.setUserPreferences(dummyUserToken,dummyUserUid,dummyUserName,dummyUserEmail)
+        advanceUntilIdle()
+        Mockito.verify(pref).saveLoginSession(dummyUserToken,dummyUserUid,dummyUserName,dummyUserEmail)
     }
 
     @Test
     fun clearUserPreferences() = runTest {
-        pref.clearLoginSession()
+        settingViewModel.clearUserPreferences()
+        advanceUntilIdle()
+        Mockito.verify(pref).clearLoginSession()
     }
 }

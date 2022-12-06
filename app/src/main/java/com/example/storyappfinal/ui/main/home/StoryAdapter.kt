@@ -1,9 +1,8 @@
-package com.example.storyappfinal.ui.dashboard.home
+package com.example.storyappfinal.ui.main.home
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
@@ -13,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.storyappfinal.data.model.Story
 import com.example.storyappfinal.ui.detail.DetailActivity
 import com.example.storyappfinal.utils.Constanta
-import com.example.storyappfinal.utils.Helper
 import com.bumptech.glide.Glide
-import com.example.storyappfinal.R
 import com.example.storyappfinal.databinding.RvStoryBinding
 
 class StoryAdapter : PagingDataAdapter<Story, StoryAdapter.ViewHolder>(DIFF_CALLBACK) {

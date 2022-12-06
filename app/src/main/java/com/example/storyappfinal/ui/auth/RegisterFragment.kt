@@ -76,7 +76,6 @@ class RegisterFragment : Fragment() {
                 binding.edPassword.error = getString(R.string.empty_email_password_name)
                 binding.edPassword.requestFocus()
             }
-            /* input not empty -> check contains error */
             else if ((binding.edEmail.error?.length ?: 0) > 0) {
                 binding.edEmail.requestFocus()
             } else if ((binding.edPassword.error?.length ?: 0) > 0) {
@@ -84,7 +83,6 @@ class RegisterFragment : Fragment() {
             } else if ((binding.edName.error?.length ?: 0) > 0) {
                 binding.edName.requestFocus()
             }
-            /* not contain error */
             else {
                 val name = binding.edName.text.toString()
                 val email = binding.edEmail.text.toString()
@@ -105,5 +103,4 @@ class RegisterFragment : Fragment() {
             commit()
         }
     }
-
 }

@@ -13,7 +13,6 @@ import com.example.storyappfinal.R
 
 class EditTextEmail : AppCompatEditText {
 
-
     constructor(context: Context) : super(context) {
         init()
     }

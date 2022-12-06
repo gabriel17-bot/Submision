@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import com.example.storyappfinal.data.model.Story
 import com.example.storyappfinal.data.model.StoryList
 import com.example.storyappfinal.data.model.StoryUpload
-import com.example.storyappfinal.data.repository.remote.ApiConfig
 import com.example.storyappfinal.utils.Constanta
 import com.example.storyappfinal.R
 import com.example.storyappfinal.data.repository.remote.ApiService
@@ -28,7 +27,6 @@ class StoryViewModel : ViewModel() {
     val storyList = MutableLiveData<List<Story>>()
     val error = MutableLiveData("")
     val isError = MutableLiveData(true)
-    val isLocationPicked = MutableLiveData(false)
 
     fun loadStoryLocationData(context: Context, token: String, apiService: ApiService) {
         val client = apiService.getStoryListLocation(token, 100)
@@ -83,6 +81,4 @@ class StoryViewModel : ViewModel() {
             }
         })
     }
-
-
 }

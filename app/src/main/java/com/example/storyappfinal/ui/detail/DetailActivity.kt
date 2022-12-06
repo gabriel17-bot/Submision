@@ -1,7 +1,6 @@
 package com.example.storyappfinal.ui.detail
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -9,8 +8,6 @@ import com.example.storyappfinal.utils.Constanta
 import com.example.storyappfinal.utils.Helper
 import com.bumptech.glide.Glide
 import com.example.storyappfinal.databinding.ActivityDetailBinding
-import kotlinx.coroutines.DelicateCoroutinesApi
-
 
 class DetailActivity : AppCompatActivity() {
 
@@ -43,5 +40,4 @@ class DetailActivity : AppCompatActivity() {
     private fun Intent.getData(key: String, defaultValue: String = "None"): String {
         return getStringExtra(key) ?: defaultValue
     }
-
 }

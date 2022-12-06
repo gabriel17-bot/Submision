@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ui.dashboard.story.NewStoryActivity">
+    tools:context=".ui.main.story.NewStoryActivity">
 
     <ImageView
         android:id="@+id/story_image"
@@ -15,7 +15,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="@string/image_story" />
 
     <EditText
         android:id="@+id/story_description"
@@ -30,7 +31,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/story_image"
-        android:autofillHints="" />
+        android:autofillHints=""
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/btn_upload"

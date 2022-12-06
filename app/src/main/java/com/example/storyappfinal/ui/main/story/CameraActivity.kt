@@ -1,10 +1,12 @@
-package com.example.storyappfinal.ui.dashboard.story
+package com.example.storyappfinal.ui.main.story
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Size
-import android.view.Gravity
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -21,12 +23,13 @@ class CameraActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private lateinit var openGalleryLauncher: ActivityResultLauncher<Intent>
-
     private lateinit var binding: ActivityCameraBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupView()
         initGallery()
         binding.let {
             it.btnShutter.setOnClickListener {
@@ -134,5 +137,18 @@ class CameraActivity : AppCompatActivity() {
                 }
             }
         )
+    }
+
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+        supportActionBar?.hide()
     }
 }

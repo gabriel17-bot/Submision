@@ -1,12 +1,10 @@
-package com.example.storyappfinal.ui.dashboard
+package com.example.storyappfinal.ui.main
 
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.WindowInsets
-import android.view.WindowManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -17,24 +15,21 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.storyappfinal.data.repository.remote.ApiConfig
 import com.example.storyappfinal.ui.auth.AuthActivity
-import com.example.storyappfinal.ui.dashboard.explore.ExploreFragment
-import com.example.storyappfinal.ui.dashboard.home.HomeFragment
-import com.example.storyappfinal.ui.dashboard.setting.ProfileFragment
-import com.example.storyappfinal.ui.dashboard.story.CameraActivity
-import com.example.storyappfinal.utils.Constanta
-import com.example.storyappfinal.utils.Helper
-import com.example.storyappfinal.utils.SettingPreferences
-import com.example.storyappfinal.utils.dataStore
+import com.example.storyappfinal.ui.main.explore.ExploreFragment
+import com.example.storyappfinal.ui.main.home.HomeFragment
+import com.example.storyappfinal.ui.main.setting.ProfileFragment
+import com.example.storyappfinal.ui.main.story.CameraActivity
 import com.example.storyappfinal.R
 import com.example.storyappfinal.data.viewmodel.*
 import com.example.storyappfinal.databinding.ActivityMainBinding
+import com.example.storyappfinal.utils.*
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val pref = SettingPreferences.getInstance(dataStore)
-    private val settingViewModel: SettingViewModel by viewModels { ViewModelSettingFactory(pref) }
+    private val settingViewModel: SettingViewModel by viewModels { ModelSettingFactory(pref) }
     private var token = ""
     private var fragmentHome: HomeFragment? = null
     private lateinit var startNewStory: ActivityResultLauncher<Intent>
@@ -153,7 +148,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getStoryViewModel(): StoryPagerViewModel {
         val viewModel: StoryPagerViewModel by viewModels {
-            ViewModelStoryFactory(
+            ModelStoryFactory(
                 this,
                 ApiConfig.getApiService(),
                 getUserToken()
@@ -175,19 +170,4 @@ class MainActivity : AppCompatActivity() {
         super.onBackPressed()
         finishAffinity()
     }
-
-    private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-        supportActionBar?.hide()
-    }
-
-
 }

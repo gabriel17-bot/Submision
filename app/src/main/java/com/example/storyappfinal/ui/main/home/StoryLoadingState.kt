@@ -1,4 +1,4 @@
-package com.example.storyappfinal.ui.dashboard.home
+package com.example.storyappfinal.ui.main.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,8 +8,8 @@ import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.storyappfinal.databinding.ItemLoadingBinding
 
-class StoryLoadingStateAdapter(private val retry: () -> Unit) :
-    LoadStateAdapter<StoryLoadingStateAdapter.LoadingStateViewHolder>() {
+class StoryLoadingState(private val retry: () -> Unit) :
+    LoadStateAdapter<StoryLoadingState.LoadingStateViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

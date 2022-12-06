@@ -1,6 +1,8 @@
 package com.example.storyappfinal.data.viewmodel
 
+import android.widget.ImageView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.core.content.res.ResourcesCompat
 import com.example.storyappfinal.data.model.StoryList
 import com.example.storyappfinal.data.model.StoryUpload
 import com.example.storyappfinal.data.repository.remote.ApiService
@@ -15,6 +17,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
@@ -64,9 +67,10 @@ class StoryViewModelTest {
             mockImageFile.name,
             requestImageFile
         )
-        Mockito.`when`(mockApiService.doUploadImage(dummyToken, fakeImageMultipart, requestDescription)).thenReturn(mockCallUpload)
+        Mockito.`when`(mockApiService.doUploadImage(any(dummyToken::class.java) , any(fakeImageMultipart::class.java), any(requestDescription::class.java))).thenReturn(mockCallUpload)
         storyViewModel.uploadNewStory(context,dummyToken, mockImageFile, dummyDescription, mockApiService)
-        Mockito.verify(mockApiService).doUploadImage(dummyToken, fakeImageMultipart, requestDescription)
-
+        Mockito.verify(mockApiService).doUploadImage(any(dummyToken::class.java) , any(fakeImageMultipart::class.java), any(requestDescription::class.java))
     }
+
+     private fun <T> any(types: Class<T>): T = Mockito.any(types)
 }

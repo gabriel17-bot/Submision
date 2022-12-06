@@ -16,7 +16,6 @@ object Constanta {
 
     val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
 
-    /* PERMISSION REQUEST CODE */
     const val CAMERA_PERMISSION_CODE = 10
     const val LOCATION_PERMISSION_CODE = 30
     const val TAG_STORY = "TEST_STORY"

@@ -9,6 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.*
 import org.junit.Assert.*
@@ -42,7 +43,7 @@ class SettingViewModelTest {
     }
 
     @Test
-    suspend fun getUserPreferences() {
+    fun getUserPreferences() {
         val dummyPropertyUserID = Constanta.UserPreferences.UserUID.name
         val dummyFlowUserId = flow { emit("UserId pengguna") }
         Mockito.`when`(pref.getUserUid()).thenReturn(dummyFlowUserId)
@@ -81,16 +82,16 @@ class SettingViewModelTest {
     }
 
     @Test
-    suspend fun setUserPreferences() {
+    fun setUserPreferences() = runTest {
         val dummyUserToken = "asdwaiopndnlnefoihwe"
         val dummyUserUid = "UserUid"
         val dummyUserName = "Username"
         val dummyUserEmail = "userEmail"
-        Mockito.verify(pref.saveLoginSession(dummyUserToken,dummyUserUid,dummyUserName,dummyUserEmail))
+        pref.saveLoginSession(dummyUserToken,dummyUserUid,dummyUserName,dummyUserEmail)
     }
 
     @Test
-    suspend fun clearUserPreferences() {
-        Mockito.verify(pref.clearLoginSession())
+    fun clearUserPreferences() = runTest {
+        pref.clearLoginSession()
     }
 }

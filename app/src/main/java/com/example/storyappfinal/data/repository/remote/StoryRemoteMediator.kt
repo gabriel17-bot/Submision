@@ -27,7 +27,8 @@ class StoryRemoteMediator(
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Story>): MediatorResult {
         val page = when (loadType) {
             LoadType.REFRESH -> {
-                INITIAL_PAGE_INDEX
+                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+                remoteKeys?.nextKey?.minus(1) ?: INITIAL_PAGE_INDEX
             }
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
@@ -77,5 +78,11 @@ class StoryRemoteMediator(
         }
     }
 
-
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, Story>): StoryRemoteKeys? {
+        return state.anchorPosition?.let { position ->
+            state.closestItemToPosition(position)?.id?.let { id ->
+                database.storyRemoteKeysDao().getRemoteKeysId(id)
+            }
+        }
+    }
 }

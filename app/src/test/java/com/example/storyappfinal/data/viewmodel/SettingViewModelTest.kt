@@ -1,12 +1,13 @@
 package com.example.storyappfinal.data.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import com.example.storyappfinal.utils.Constanta
 import com.example.storyappfinal.utils.SettingPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.*
 import org.junit.*
 import org.junit.Assert.*
@@ -39,41 +40,23 @@ class SettingViewModelTest {
     }
 
     @Test
-    fun getUserPreferences() {
+    fun getUserPreferences() = runTest{
+        val dummyId = "Ini id paslu"
         val dummyPropertyUserID = Constanta.UserPreferences.UserUID.name
-        val dummyFlowUserId = flow { emit("UserId pengguna") }
+        val dummyFlowUserId = flowOf(dummyId)
         Mockito.`when`(pref.getUserUid()).thenReturn(dummyFlowUserId)
-        val actualResultUserID = settingViewModel.getUserPreferences(dummyPropertyUserID)
-        val expectedResultUserID = dummyFlowUserId.asLiveData()
-        Assert.assertEquals(actualResultUserID.value, expectedResultUserID.value)
 
-        val dummyPropertyUserToken = Constanta.UserPreferences.UserToken.name
-        val dummyFlowUserToken = flow { emit("UserToken pengguna") }
-        Mockito.`when`(pref.getUserToken()).thenReturn(dummyFlowUserToken)
-        val actualResultUserToken = settingViewModel.getUserPreferences(dummyPropertyUserToken)
-        val expectedResultUserToken = dummyFlowUserToken.asLiveData()
-        Assert.assertEquals(expectedResultUserToken.value, actualResultUserToken.value)
+        val actualLiveData = settingViewModel.getUserPreferences(dummyPropertyUserID)
+        Mockito.verify(pref).getUserUid()
+        var actualResult = ""
+        actualLiveData.observeForever {
+            actualResult = it
+        }
 
-        val dummyPropertyUserName = Constanta.UserPreferences.UserName.name
-        val dummyFlowUserName = flow { emit("UserName pengguna") }
-        Mockito.`when`(pref.getUserName()).thenReturn(dummyFlowUserName)
-        val actualResultUserName = settingViewModel.getUserPreferences(dummyPropertyUserName)
-        val expectedResultUserName = dummyFlowUserName.asLiveData()
-        Assert.assertEquals(expectedResultUserName.value, actualResultUserName.value)
-
-        val dummyPropertyUserEmail = Constanta.UserPreferences.UserEmail.name
-        val dummyFlowUserEmail = flow { emit("UserEmail pengguna") }
-        Mockito.`when`(pref.getUserEmail()).thenReturn(dummyFlowUserEmail)
-        val actualResultUserEmail = settingViewModel.getUserPreferences(dummyPropertyUserEmail)
-        val expectedResultUserEmail = dummyFlowUserEmail.asLiveData()
-        Assert.assertEquals(expectedResultUserEmail.value, actualResultUserEmail.value)
-
-        val dummyPropertyUserLastLogin = Constanta.UserPreferences.UserLastLogin.name
-        val dummyFlowUserLastLogin = flow { emit("UserLastLogin pengguna") }
-        Mockito.`when`(pref.getUserLastLogin()).thenReturn(dummyFlowUserLastLogin)
-        val actualResultUserLastLogin = settingViewModel.getUserPreferences(dummyPropertyUserLastLogin)
-        val expectedResultUserLastLogin = dummyFlowUserLastLogin.asLiveData()
-        Assert.assertEquals(expectedResultUserLastLogin.value, actualResultUserLastLogin.value)
+        delay(100)
+        println("Expected: $dummyId")
+        println("ActualId: $actualResult")
+        Assert.assertEquals(dummyId, actualResult)
     }
 
     @Test
